@@ -6,7 +6,7 @@
 
 
 %% Record audio and MIDI simultaneously
-record_time = 15;
+record_time = 20;
 availableDevices = mididevinfo;
 info = audiodevinfo;
 tic 
