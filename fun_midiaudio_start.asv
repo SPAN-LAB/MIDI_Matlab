@@ -1,8 +1,8 @@
 %% fun_midi_start
 
-function [recorder, device, audioinfo] = fun_midiaudio_start(fs, bit_resolution, record_time)
+function [recorder, device, audioinfo] = fun_midiaudio_start(mididevice_idx, audiodevice_idx, fs, bit_resolution, record_time)
 %% Parameters to record
-if ~exist('fs', 'var')
+if ~exist('fs', 'var') || isempty(fs)
     fs = 44100;             % Sampling rate for audio signal
 end
 if ~exist('bit_resolution', 'var')
@@ -12,22 +12,24 @@ if ~exist('record_time', 'var')
     record_time = 20;       % recording time in seconds
 end
 
-audiodevice_idx = 2;
-mididevice_idx = 1;
+if ~exist('mididevice_idx', 'var')
+    mididevice_idx =1;
+end
+if ~exist('audiodevice_idx', 'var')
+    audiodevice_idx =1;
+end
+
+% audiodevice_idx = 2;
+% mididevice_idx = 1;
 
 %% Record audio and MIDI simultaneously
 
-availableDevices = mididevinfo;
+midi_device = mididevinfo;
 audioinfo = audiodevinfo;
  
 recorder = audiorecorder(fs, bit_resolution, 1, audioinfo.input(audiodevice_idx).ID);
 record(recorder, record_time)
-device = mididevice(availableDevices.input(mididevice_idx).ID);
-
-%%
-
-
-
+device = mididevice(midi_device.input(mididevice_idx).ID);
 
 %%
 

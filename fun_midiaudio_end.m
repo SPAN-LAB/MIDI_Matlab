@@ -9,7 +9,8 @@ msgs = midireceive(device);
 % midi_offset = toc;
 
 clear device
-play(recorder)
+% play(recorder)
+stop(recorder)
 %%
 fs = recorder.SampleRate;
 aud = getaudiodata(recorder);
