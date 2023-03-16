@@ -4,16 +4,19 @@
 % This script has to be integrated with the LSL biosemi acuisition to
 % record cortical potentials to Musical stimuli
 
-
+clc
 %% Record audio and MIDI simultaneously
-record_time = 20;
+record_time = 5;
 availableDevices = mididevinfo;
 info = audiodevinfo;
+midi_device_idx = 2;
+audio_device_idx = 2;
+
 tic 
 
-recorder = audiorecorder(44100, 16, 1, info.input(2).ID);
+recorder = audiorecorder(44100, 16, 1, info.input(audio_device_idx).ID);
 record(recorder, record_time)
-device = mididevice(availableDevices.input(1).ID);
+device = mididevice(availableDevices.input(midi_device_idx).ID);
 pause(record_time)
 aud_offset = toc;
 msgs = midireceive(device)

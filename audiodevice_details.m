@@ -1,5 +1,5 @@
 % mididevice_details
-clc
+
 
 audiodevice = audiodevinfo;
 

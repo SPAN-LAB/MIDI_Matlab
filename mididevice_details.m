@@ -1,5 +1,5 @@
 % mididevice_details
-clc
+
 midi_device = mididevinfo;
 input_len = length(midi_device.input);
 output_len = length(midi_device.output);
