@@ -5,27 +5,53 @@ audiodevice_details
 mididevice_details
 
 %% start audio and midi recording 
-mididevice_idx =2;
-audiodevice_idx = 2;
-fs = 48000;
-bit_resolution = 16;
-record_time = 5; 
+mididevice_idx =1;      % Index of midi input device
+audiodevice_idx = 3;    % Indec of audio input    
+fs = 31.25e3;           % Sampling rate for recording audio
+bit_resolution = 16;    % Bit resolution for the audio recording
+record_time = 10;   % recording duration in seconds
 
 
 
  [recorder, device, audioinfo] = fun_midiaudio_start(mididevice_idx, audiodevice_idx, fs, bit_resolution, record_time);
 pause(record_time)
-[aud, msgs,onset_stamps,notenum, device, recorder] = fun_midiaudio_end(device, recorder)
+[aud, msgs,onset_stamps,notenum, device, recorder] = fun_midiaudio_end(device, recorder);
 clear device
 %%
 t = (1:length(aud))*(1/fs);
-figure;
+figure('Units', 'inches', 'Color', 'w');
 hold on
 plot(t,aud)
 for i= 1:length(onset_stamps)
-
         line([onset_stamps(i) onset_stamps(i)], [-1 1], 'Color', 'k', 'LineWidth', 2, 'LineStyle', ':')
-
+        text(onset_stamps(i), 1, num2str(notenum(i)))
 end
 
-title('time in seconds')
+xlabel('time in seconds')
+ylabel('Amplitude a.u')
+
+
+audiowrite('audio.wav', aud,fs)
+%%
+
+
+tmpaud = []; 
+notelength = 0.1; % length of note in seconds
+notelength_idx = notelength*fs;
+for i =1:length(onset_stamps)
+    [~,idx] = min(abs(t-onset_stamps(i)));
+    if idx+notelength_idx>length(aud)
+        continue
+    end
+    tmpaud(:,i) = aud(idx:idx+notelength_idx-1);
+end
+
+time_epoch = (1:notelength_idx)*(1/fs);
+
+tmpaud = zscore(tmpaud, [],1);
+
+figure;plot(time_epoch*1000, tmpaud)
+
+xlabel('time in ms')
+
+%%
