@@ -1,16 +1,23 @@
 clc;clear
 
 %%
-audiodevice_details
-mididevice_details
+% audiodevice_details
+% mididevice_details
+subname = 'NIke'
 
+%% Create folders
+
+
+if ~exist("subname")
 %% start audio and midi recording 
+
+
 mididevice_idx =2;      % Index of midi input device
 audiodevice_idx = 3;    % Index of audio input    
 fs = 48000;           % Sampling rate for recording audio
 bit_resolution = 16;    % Bit resolution for the audio recording
-record_time = 10;   % recording duration in seconds
-
+record_time = input('Enter the number of seconds to record = ');   % recording duration in seconds
+cond_name = input('Enter the condition name  = ', 's');
 
 
 [recorder, device, audioinfo] = fun_midiaudio_start(mididevice_idx, audiodevice_idx, fs, bit_resolution, record_time);
@@ -54,4 +61,8 @@ figure;plot(time_epoch*1000, tmpaud)
 
 xlabel('time in ms')
 
+
+%% Save variables to workspace
+save()
 %%
+

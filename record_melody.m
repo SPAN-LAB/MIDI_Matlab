@@ -5,11 +5,11 @@ audiodevice_details
 mididevice_details
 
 %% start audio and midi recording 
-mididevice_idx =2;      % Index of midi input device
-audiodevice_idx = 3;    % Index of audio input    
+mididevice_idx =1;      % Index of midi input device
+audiodevice_idx = 2;    % Index of audio input    
 fs = 48000;           % Sampling rate for recording audio
 bit_resolution = 16;    % Bit resolution for the audio recording
-record_time = 10;   % recording duration in seconds
+record_time = 30;   % recording duration in seconds
 
 
 
@@ -55,3 +55,5 @@ figure;plot(time_epoch*1000, tmpaud)
 xlabel('time in ms')
 
 %%
+outname = ['MIDI_audio/', 'dissonant.wav'];
+audiowrite(outname, aud, fs)

@@ -31,7 +31,7 @@ for i =1:output_len
     end
 end
 
-clc
+
 
 tbl_input
 tbl_output
