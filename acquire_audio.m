@@ -1,9 +1,9 @@
-clc;clear
+clc;clear;close all
 
 %%
 % audiodevice_details
 % mididevice_details
-subname = 'NIke';
+subname = 'sub2';
 
 %% Create folders
 
@@ -15,17 +15,24 @@ end
 
 
 mididevice_idx =2;      % Index of midi input device
-audiodevice_idx = 3;    % Index of audio input    
+audiodevice_idx = 2;    % Index of audio input    
 fs = 48000;           % Sampling rate for recording audio
 bit_resolution = 16;    % Bit resolution for the audio recording
 record_time = input('Enter the number of seconds to record = ');   % recording duration in seconds
 cond_name = input('Enter the condition name  = ', 's');
-
+disp('Hit enter to continue')
+pause
+disp('running experiment')
+ tic
 
 [recorder, device, audioinfo] = fun_midiaudio_start(mididevice_idx, audiodevice_idx, fs, bit_resolution, record_time);
 pause(record_time)
 [aud, msgs,onset_stamps,notenum, device, recorder] = fun_midiaudio_end(device, recorder);
 clear device
+t2 = toc;
+outname = fullfile(subname, cond_name);
+save(outname)
+disp(['experiment done and saved in ',outname ]  )
 %% plotting
 t = (1:length(aud))*(1/fs);
 figure('Units', 'inches', 'Color', 'w');

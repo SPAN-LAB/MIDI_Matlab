@@ -18,7 +18,7 @@ aud = aud/(max(abs(aud)));
 t =(1:length(aud))*(1/fs);
 % figure;plot(t, aud)
 
-timestamp = []; onset_stamps = [];n =1;
+timestamp = []; onset_stamps = [];n =1; notenum =[];
 % hold on
 for i= 1:length(msgs)
     timestamp(i) = msgs(i).Timestamp;
